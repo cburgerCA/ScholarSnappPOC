@@ -162,22 +162,92 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SSSDK\Activity.cs" />
+    <Compile Include="SSSDK\ActivityTypeList.cs" />
+    <Compile Include="SSSDK\Address.cs" />
+    <Compile Include="SSSDK\AddressTypesList.cs" />
+    <Compile Include="SSSDK\ApplicationStatusList.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="SSSDK\AttachedFile.cs" />
+    <Compile Include="SSSDK\AttachedFileTypeList.cs" />
+    <Compile Include="SSSDK\BirthPlace.cs" />
+    <Compile Include="SSSDK\Citizenship.cs" />
+    <Compile Include="SSSDK\CitizenshipStatusList.cs" />
+    <Compile Include="SSSDK\Class.cs" />
+    <Compile Include="SSSDK\ClassList.cs" />
+    <Compile Include="SSSDK\ClassRank.cs" />
+    <Compile Include="SSSDK\ClassStatusList.cs" />
+    <Compile Include="SSSDK\ClassTypeList.cs" />
+    <Compile Include="SSSDK\CollegeChoice.cs" />
+    <Compile Include="SSSDK\CollegeReadinessProgram.cs" />
+    <Compile Include="SSSDK\CollegeReadinessProgramList.cs" />
+    <Compile Include="SSSDK\ContactInfo.cs" />
+    <Compile Include="SSSDK\ContactMethodsList.cs" />
+    <Compile Include="SSSDK\Context.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="SSSDK\CultureCodeList.cs" />
+    <Compile Include="SSSDK\CurrencyList.cs" />
+    <Compile Include="SSSDK\DependencyStatusList.cs" />
+    <Compile Include="SSSDK\EducationLevel.cs" />
+    <Compile Include="SSSDK\EducationLevelsList.cs" />
+    <Compile Include="SSSDK\Enrollment.cs" />
+    <Compile Include="SSSDK\Essay.cs" />
+    <Compile Include="SSSDK\EssayTypes.cs" />
+    <Compile Include="SSSDK\EthnicitiesList.cs" />
+    <Compile Include="SSSDK\Ethnicity.cs" />
+    <Compile Include="SSSDK\FAFSAStatusList.cs" />
+    <Compile Include="SSSDK\FamilyTitlesList.cs" />
+    <Compile Include="SSSDK\GenderDetailList.cs" />
+    <Compile Include="SSSDK\GenderList.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="SSSDK\GovernmentAid.cs" />
+    <Compile Include="SSSDK\GovernmentPrograms.cs" />
+    <Compile Include="SSSDK\GPA.cs" />
+    <Compile Include="SSSDK\GPAInfo.cs" />
+    <Compile Include="SSSDK\GradingScaleList.cs" />
+    <Compile Include="SSSDK\GraduationInfo.cs" />
+    <Compile Include="SSSDK\HomeEnvironment.cs" />
+    <Compile Include="SSSDK\LivingWithList.cs" />
+    <Compile Include="SSSDK\Major.cs" />
+    <Compile Include="SSSDK\MaritalStatusList.cs" />
+    <Compile Include="SSSDK\MilitaryBranchList.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="SSSDK\Money.cs" />
+    <Compile Include="SSSDK\Name.cs" />
+    <Compile Include="SSSDK\OrientationList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SSSDK\Race.cs" />
+    <Compile Include="SSSDK\RacesList.cs" />
+    <Compile Include="SSSDK\RankMethodsList.cs" />
+    <Compile Include="SSSDK\RankSystemsList.cs" />
+    <Compile Include="SSSDK\Reference.cs" />
+    <Compile Include="SSSDK\RelationshipList.cs" />
+    <Compile Include="SSSDK\Relative.cs" />
+    <Compile Include="SSSDK\ScholarshipApplication.cs" />
+    <Compile Include="SSSDK\ScholarshipDataStandardv1.Designer.cs" />
+    <Compile Include="SSSDK\ScholarshipPurpose.cs" />
+    <Compile Include="SSSDK\ScholarshipPurposeList.cs" />
+    <Compile Include="SSSDK\School.cs" />
+    <Compile Include="SSSDK\SchoolProgramTypesList.cs" />
+    <Compile Include="SSSDK\SchoolTypesList.cs" />
+    <Compile Include="SSSDK\SchoolYearsList.cs" />
+    <Compile Include="SSSDK\ScoreNumericTypes.cs" />
+    <Compile Include="SSSDK\ScoreTypes.cs" />
+    <Compile Include="SSSDK\Spouse.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="SSSDK\Student.cs" />
+    <Compile Include="SSSDK\TestScore.cs" />
+    <Compile Include="SSSDK\TestsList.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -188,6 +258,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="SSSDK\ScholarshipDataStandardv1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -196,9 +269,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sha1.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -234,6 +309,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\ScholarSnappConnect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

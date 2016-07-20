@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "ScholarSnappConnect";
+}
+
+<h2>ScholarSnappConnect</h2>
+
+@if (ViewBag.Error == null)
+{
+<p>The code given is: @ViewBag.Code</p>
+<p>The State given is: @ViewBag.State</p>
+  if (ViewBag.Extra != null && ViewBag.Extra != "")
+  {
+    <p>Extra information: @ViewBag.Extra</p>
+  }
+}
+else
+{
+    <p>The Error given is: @ViewBag.Error</p>
+}

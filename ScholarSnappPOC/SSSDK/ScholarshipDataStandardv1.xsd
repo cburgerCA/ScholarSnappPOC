@@ -1,0 +1,2543 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://scholarshipproviders.org/scholarshipapplication1.0" xmlns:sds="http://scholarshipproviders.org/scholarshipapplication" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://scholarshipproviders.org/scholarshipapplication" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="ScholarshipApplication" type="sds:ScholarshipApplication">
+    <xs:annotation>
+      <xs:documentation>A scholarship application from one student</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ScholarshipApplication">
+    <xs:annotation>
+      <xs:documentation>The root element of a scholarship application</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Context" type="sds:Context">
+        <xs:annotation>
+          <xs:documentation>The scholarship application</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AttachedFiles" type="sds:AttachedFile" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>MIME encoded file attachments such as transcripts, SARs, student pictures, etc.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Student" type="sds:Student">
+        <xs:annotation>
+          <xs:documentation>The student and represents the majority of information in the scholarship application</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Context">
+    <xs:annotation>
+      <xs:documentation>Information about the scholarship application itself, rather than about the student</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Created" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Date that the scholarship application file was originally created. Once provided, this field should be considered read-only and further updates made through the 'LastUpdated' field.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CreatedBy" type="sds:ShortString">
+        <xs:annotation>
+          <xs:documentation>Organization or Web site that originally created the application. Once provided, this field should be considered read-only and further updates made through the 'LastUpdatedBy' field.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LastUpdated" type="xs:dateTime" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Date that the scholarship application file was last updated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LastUpdatedBy" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Organization or Web site that last updated the application</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ApplicationLanguage" type="sds:CultureCodeList">
+        <xs:annotation>
+          <xs:documentation>Language in which the scholarship application file was created</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PermissionGivenDate" type="xs:dateTime" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Date that student gave permission to forward their application to other organizations.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AttachedFile">
+    <xs:annotation>
+      <xs:documentation>Type that represents a file attached to a scholarship application, such as a SAR, transcript, student's photo, etc.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FileName" type="sds:ShortString">
+        <xs:annotation>
+          <xs:documentation>Name of the attached file</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileNameExtension" type="sds:ShortString">
+        <xs:annotation>
+          <xs:documentation>Filename extension that is used to determine the program needed to read the file, for example TXT for raw text, DOC for Word document, BMP for a bitmap image, etc.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileDescription" type="sds:AttachedFileTypeList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Content of the attached file, whether a transcript, a picture, etc.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Free-form description of the attached file, for example 'Photo of Joe Miller'</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateAttached" type="xs:dateTime" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Date that the file was attached to the application</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="File" type="xs:base64Binary">
+        <xs:annotation>
+          <xs:documentation>The attached file itself in MIME (base64) encoded format</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="AttachedFileTypeList">
+    <xs:annotation>
+      <xs:documentation>Content of the attached file, whether a transcript, a picture, etc.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Student Aid Report (SAR)"/>
+      <xs:enumeration value="Transcript"/>
+      <xs:enumeration value="FAFSA"/>
+      <xs:enumeration value="Picture"/>
+      <xs:enumeration value="Recommendation/Reference Letter"/>
+      <xs:enumeration value="Portfolio Document"/>
+      <xs:enumeration value="Diploma Certificate"/>
+      <xs:enumeration value="Degree Certificate"/>
+      <xs:enumeration value="Proof of Achievement"/>
+      <xs:enumeration value="School Acceptance Letter"/>
+      <xs:enumeration value="Medical Document"/>
+      <xs:enumeration value="Proof of Employment"/>
+      <xs:enumeration value="Video"/>
+      <xs:enumeration value="Audio"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ShortString">
+    <xs:annotation>
+      <xs:documentation>String used for short text fields</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LongString">
+    <xs:annotation>
+      <xs:documentation>String used for long text fields, such as essays</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CultureCodeList">
+    <xs:annotation>
+      <xs:documentation>The list of culture codes per RFC 2119</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:language">
+      <xs:enumeration value="en-US"/>
+      <xs:enumeration value="en-CA"/>
+      <xs:enumeration value="af-ZA"/>
+      <xs:enumeration value="sq-AL"/>
+      <xs:enumeration value="ar-DZ"/>
+      <xs:enumeration value="ar-BH"/>
+      <xs:enumeration value="ar-EG"/>
+      <xs:enumeration value="ar-IQ"/>
+      <xs:enumeration value="ar-JO"/>
+      <xs:enumeration value="ar-KW"/>
+      <xs:enumeration value="ar-LB"/>
+      <xs:enumeration value="ar-LY"/>
+      <xs:enumeration value="ar-MA"/>
+      <xs:enumeration value="ar-OM"/>
+      <xs:enumeration value="ar-QA"/>
+      <xs:enumeration value="ar-SA"/>
+      <xs:enumeration value="ar-SY"/>
+      <xs:enumeration value="ar-TN"/>
+      <xs:enumeration value="ar-AE"/>
+      <xs:enumeration value="ar-YE"/>
+      <xs:enumeration value="hy-AM"/>
+      <xs:enumeration value="Cy-az-AZ"/>
+      <xs:enumeration value="Lt-az-AZ"/>
+      <xs:enumeration value="eu-ES"/>
+      <xs:enumeration value="be-BY"/>
+      <xs:enumeration value="bg-BG"/>
+      <xs:enumeration value="ca-ES"/>
+      <xs:enumeration value="zh-CN"/>
+      <xs:enumeration value="zh-HK"/>
+      <xs:enumeration value="zh-MO"/>
+      <xs:enumeration value="zh-SG"/>
+      <xs:enumeration value="zh-TW"/>
+      <xs:enumeration value="zh-CHS"/>
+      <xs:enumeration value="zh-CHT"/>
+      <xs:enumeration value="hr-HR"/>
+      <xs:enumeration value="cs-CZ"/>
+      <xs:enumeration value="da-DK"/>
+      <xs:enumeration value="nl-BE"/>
+      <xs:enumeration value="nl-NL"/>
+      <xs:enumeration value="en-AU"/>
+      <xs:enumeration value="en-BZ"/>
+      <xs:enumeration value="en-CB"/>
+      <xs:enumeration value="en-IE"/>
+      <xs:enumeration value="en-JM"/>
+      <xs:enumeration value="en-NZ"/>
+      <xs:enumeration value="en-PH"/>
+      <xs:enumeration value="en-ZA"/>
+      <xs:enumeration value="en-TT"/>
+      <xs:enumeration value="en-GB"/>
+      <xs:enumeration value="en-ZW"/>
+      <xs:enumeration value="et-EE"/>
+      <xs:enumeration value="fo-FO"/>
+      <xs:enumeration value="fa-IR"/>
+      <xs:enumeration value="fi-FI"/>
+      <xs:enumeration value="fr-BE"/>
+      <xs:enumeration value="fr-CA"/>
+      <xs:enumeration value="fr-FR"/>
+      <xs:enumeration value="fr-LU"/>
+      <xs:enumeration value="fr-MC"/>
+      <xs:enumeration value="fr-CH"/>
+      <xs:enumeration value="gl-ES"/>
+      <xs:enumeration value="ka-GE"/>
+      <xs:enumeration value="de-AT"/>
+      <xs:enumeration value="de-DE"/>
+      <xs:enumeration value="de-LI"/>
+      <xs:enumeration value="de-LU"/>
+      <xs:enumeration value="de-CH"/>
+      <xs:enumeration value="el-GR"/>
+      <xs:enumeration value="gu-IN"/>
+      <xs:enumeration value="he-IL"/>
+      <xs:enumeration value="hi-IN"/>
+      <xs:enumeration value="hu-HU"/>
+      <xs:enumeration value="is-IS"/>
+      <xs:enumeration value="id-ID"/>
+      <xs:enumeration value="it-IT"/>
+      <xs:enumeration value="it-CH"/>
+      <xs:enumeration value="ja-JP"/>
+      <xs:enumeration value="kn-IN"/>
+      <xs:enumeration value="kk-KZ"/>
+      <xs:enumeration value="ko-KR"/>
+      <xs:enumeration value="ky-KZ"/>
+      <xs:enumeration value="lv-LV"/>
+      <xs:enumeration value="lt-LT"/>
+      <xs:enumeration value="mk-MK"/>
+      <xs:enumeration value="ms-BN"/>
+      <xs:enumeration value="ms-MY"/>
+      <xs:enumeration value="mr-IN"/>
+      <xs:enumeration value="mn-MN"/>
+      <xs:enumeration value="nb-NO"/>
+      <xs:enumeration value="nn-NO"/>
+      <xs:enumeration value="pl-PL"/>
+      <xs:enumeration value="pt-BR"/>
+      <xs:enumeration value="pt-PT"/>
+      <xs:enumeration value="pa-IN"/>
+      <xs:enumeration value="ro-RO"/>
+      <xs:enumeration value="ru-RU"/>
+      <xs:enumeration value="sa-IN"/>
+      <xs:enumeration value="Cy-sr-SP"/>
+      <xs:enumeration value="Lt-sr-SP"/>
+      <xs:enumeration value="sk-SK"/>
+      <xs:enumeration value="sl-SI"/>
+      <xs:enumeration value="es-AR"/>
+      <xs:enumeration value="es-BO"/>
+      <xs:enumeration value="es-CL"/>
+      <xs:enumeration value="es-CO"/>
+      <xs:enumeration value="es-CR"/>
+      <xs:enumeration value="es-DO"/>
+      <xs:enumeration value="es-EC"/>
+      <xs:enumeration value="es-SV"/>
+      <xs:enumeration value="es-GT"/>
+      <xs:enumeration value="es-HN"/>
+      <xs:enumeration value="es-MX"/>
+      <xs:enumeration value="es-NI"/>
+      <xs:enumeration value="es-PA"/>
+      <xs:enumeration value="es-PY"/>
+      <xs:enumeration value="es-PE"/>
+      <xs:enumeration value="es-PR"/>
+      <xs:enumeration value="es-ES"/>
+      <xs:enumeration value="es-UY"/>
+      <xs:enumeration value="es-VE"/>
+      <xs:enumeration value="sw-KE"/>
+      <xs:enumeration value="sv-FI"/>
+      <xs:enumeration value="sv-SE"/>
+      <xs:enumeration value="ta-IN"/>
+      <xs:enumeration value="tt-RU"/>
+      <xs:enumeration value="te-IN"/>
+      <xs:enumeration value="th-TH"/>
+      <xs:enumeration value="tr-TR"/>
+      <xs:enumeration value="uk-UA"/>
+      <xs:enumeration value="ur-PK"/>
+      <xs:enumeration value="Cy-uz-UZ"/>
+      <xs:enumeration value="Lt-uz-UZ"/>
+      <xs:enumeration value="vi-VN"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Student">
+    <xs:annotation>
+      <xs:documentation>Type that represents all the information about a student in a scholarship application</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="sds:Name">
+        <xs:annotation>
+          <xs:documentation>Name of the student</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContactInfo" type="sds:ContactInfo">
+        <xs:annotation>
+          <xs:documentation>Methods by which to reach the student</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StudentCustomId" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Alternative program-generated student identifier that is intended for students who may not have or do not provide the typical identification numbers.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Addresses" type="sds:Address" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The student's various addresses</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TimeAtCurrentAddress" type="xs:duration" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Length of time the student has lived at their current address</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthDate" type="xs:date" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Student's date of birth</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Gender" type="sds:GenderList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Student's gender</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GenderDetail" type="sds:GenderDetailList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Student's detailed gender information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Orientation" type="sds:OrientationList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Student's indicated sexual orientation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Race" type="sds:Race" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Student's race</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Ethnicity" type="sds:Ethnicity" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Student's ethnicity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthPlace" type="sds:BirthPlace" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The location where the person was born</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Citizenship" type="sds:Citizenship" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The student's citizenship</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Disabled" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the student indicates a disbility</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DisabilityDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The description of a student's disability</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Veteran" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the student is a military veteran</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VeteranDesc" type="sds:MilitaryBranchList" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The branches of the military in which the student served</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POW" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the student was ever a prisoner of war</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="POWDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>War or conflict in which the student was a prisoner of war</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChildofPOWMIA" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the student is a child of a POW or MIA military service member</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EducationLevel" type="sds:EducationLevel" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Student's highest completed level of school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TestScores" type="sds:TestScore" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The student's test scores</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GraduationInfo" type="sds:GraduationInfo" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Student's graduation and/or GED information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GPA" type="sds:GPA" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Student's grade point averages for various years of school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClassRank" type="sds:ClassRank" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Student's current class rank indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrentEnrollments" type="sds:Enrollment" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Schools in which the student is enrolled</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CollegeChoices" type="sds:CollegeChoice" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Student's college choices</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FinalCollegeChoice" type="sds:CollegeChoice" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Student's indicated top choice assuming that they receive multiple acceptances</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ScholarshipPurpose" type="sds:ScholarshipPurpose" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The type of school for which the student seeks a scholarship</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ApplyingForOtherScholarships" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the student is applying for other scholarships</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IntendedMajors" type="sds:Major" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The student's intended areas of study when in school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrentMajors" type="sds:Major" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The student's current areas of study assuming they are currently in school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IntendedDiscipline" type="sds:ShortString" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The student's intended area of employment after graduation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Essays" type="sds:Essay" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The student's narrative application essays</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Activities" type="sds:Activity" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The amount of time the student has spent on certain activities</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Employed" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the student is employed</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Income" type="sds:Money" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The student's financial information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FAFSAParentsCash" type="sds:Money" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The student's parents total current balance in cash, savings, and
+            checking accounts
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FAFSAParentsNetWorth" type="sds:Money" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The student's parents net worth of their investments, including
+            real estate (not their home)
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FAFSAParentsBusinessInvestments" type="sds:Money" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The student's parents net worth of their current business and/or investment
+            farms.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FAFSAStatus" type="sds:FAFSAStatusList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Student's current status regarding the filing of a Free Application for Federal Student Aid (FAFSA) form</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FAFSAStatusDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Free form description when the student chose the 'other' option</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FAFSAEFC" type="xs:decimal" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The Expected Family Contribution (EFC) from the student's FAFSA form</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FAFSAEFCCurrency" type="sds:CurrencyList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The currency used to report the FAFSA EFC amount</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FAFSAFilingYear" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The school year of the student's FAFSA filing in the format of two 4-digit years separated by a dash, for example 2008-2009</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DisciplineOrLegal" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the student has been subjected to any school or legal disciplinary action. Use disciplinary essay type for description.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MaritalStatus" type="sds:MaritalStatusList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The student's marital status</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Spouse" type="sds:Spouse" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The student's spouse, significant other, or partner</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DependencyStatus" type="sds:DependencyStatusList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the student is a dependent of someone else or independent</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DependentsCount" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The number of dependents under the student's care, such as the count of the student's children</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HomeEnvironment" type="sds:HomeEnvironment" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The student's home environment and living arrangements</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FamilyMembersInCollegeCount" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The number of student family members that are attending college, not counting the student</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SiblingsCount" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The student's number of siblings</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Parents" type="sds:Relative" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>The person's parents</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GovernmentAidParticipation" type="sds:GovernmentAid" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Any government aid that the student received</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CollegeReadinessPrograms" type="sds:CollegeReadinessProgram" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The student's college readiness program participation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StudentReferences" type="sds:Reference" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The student's references, such as school counselors, registrars, and recommenders</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SimpleTranscript" type="sds:Class" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The student's transcript in an abbreviated form</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Major">
+    <xs:annotation>
+      <xs:documentation>The student's intended course of study</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MajorName" type="sds:ShortString">
+        <xs:annotation>
+          <xs:documentation>The student's intended area of study when in school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MajorRank" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The rank of the college major choice per the student's order of preference, for example first, second, third, etc.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="OrientationList">
+    <xs:annotation>
+      <xs:documentation>Sexual orientation of a student</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Straight"/>
+      <xs:enumeration value="Gay"/>
+      <xs:enumeration value="Lesbian"/>
+      <xs:enumeration value="Bisexual"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FAFSAStatusList">
+    <xs:annotation>
+      <xs:documentation>The status of a student's FAFSA filing</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Filed"/>
+      <xs:enumeration value="Planning to file"/>
+      <xs:enumeration value="Not planning to file"/>
+      <xs:enumeration value="Unable to file"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MilitaryBranchList">
+    <xs:annotation>
+      <xs:documentation>Military branches in which a student may have served</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Army"/>
+      <xs:enumeration value="Navy"/>
+      <xs:enumeration value="Air Force"/>
+      <xs:enumeration value="Marines"/>
+      <xs:enumeration value="Coast Guard"/>
+      <xs:enumeration value="National Guard"/>
+      <xs:enumeration value="Army Reserve"/>
+      <xs:enumeration value="Navy Reserve"/>
+      <xs:enumeration value="Air Force Reserve"/>
+      <xs:enumeration value="Marines Reserve"/>
+      <xs:enumeration value="Coast Guard Reserve"/>
+      <xs:enumeration value="National Guard Reserve"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DependencyStatusList">
+    <xs:annotation>
+      <xs:documentation>List of possible legal dependency status names</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Independent adult"/>
+      <xs:enumeration value="Dependent minor"/>
+      <xs:enumeration value="Independent or emancipated minor"/>
+      <xs:enumeration value="Dependent adult"/>
+      <xs:enumeration value="Ward of the court"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Essay">
+    <xs:annotation>
+      <xs:documentation>A free-form essay written by the student on a given topic</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="EssayType" type="sds:EssayTypes">
+        <xs:annotation>
+          <xs:documentation>The type of essay provided</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EssayTypeOtherDesc" type="sds:LongString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Explanation of the essay or the question that was asked in a custom essay question</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EssayContent" type="sds:LongString">
+        <xs:annotation>
+          <xs:documentation>The text contents of the essay itself</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="EssayTypes">
+    <xs:annotation>
+      <xs:documentation>The essay categories that are available</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Post graduation and career goals"/>
+      <xs:enumeration value="Education plans beyond graduation"/>
+      <xs:enumeration value="Leadership experiences"/>
+      <xs:enumeration value="Organizational leadership roles and outcomes"/>
+      <xs:enumeration value="Lifetime goals and objectives"/>
+      <xs:enumeration value="Personal background or history"/>
+      <xs:enumeration value="Family background or history"/>
+      <xs:enumeration value="Affecting the lives of others"/>
+      <xs:enumeration value="Community contribution"/>
+      <xs:enumeration value="Community leadership"/>
+      <xs:enumeration value="The community impact upon the student"/>
+      <xs:enumeration value="Favorite activity"/>
+      <xs:enumeration value="Home responsibilities"/>
+      <xs:enumeration value="Overcoming adversity"/>
+      <xs:enumeration value="Work responsibilities"/>
+      <xs:enumeration value="Personal achievements, awards, and honors"/>
+      <xs:enumeration value="Special circumstances affecting college finance"/>
+      <xs:enumeration value="Why student deserves the scholarship"/>
+      <xs:enumeration value="How ethnicity shaped the student"/>
+      <xs:enumeration value="How college readiness programs helped the student"/>
+      <xs:enumeration value="Athletic involvement, achievements, and impact on the student"/>
+      <xs:enumeration value="Special programs participation and outcomes"/>
+      <xs:enumeration value="Explanation of student's college choices"/>
+      <xs:enumeration value="Explanation of student's major choices"/>
+      <xs:enumeration value="Failures and the resulting lessons learned"/>
+      <xs:enumeration value="How the student challenged herself"/>
+      <xs:enumeration value="Disciplinary or legal problems"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CollegeReadinessProgram">
+    <xs:annotation>
+      <xs:documentation>The student's participation in a college readiness program</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProgramName" type="sds:CollegeReadinessProgramList"/>
+      <xs:element name="ProgramOtherDesc" type="sds:ShortString" minOccurs="0"/>
+      <xs:element name="CounselorFirstName" type="sds:ShortString" minOccurs="0"/>
+      <xs:element name="CounselorLastName" type="sds:ShortString" minOccurs="0"/>
+      <xs:element name="CounselorEmail" type="sds:ShortString" minOccurs="0"/>
+      <xs:element name="LengthOfParticipation" type="xs:duration" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CollegeReadinessProgramList">
+    <xs:annotation>
+      <xs:documentation>List of college readiness programs</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="AP Strategies"/>
+      <xs:enumeration value="Aspire"/>
+      <xs:enumeration value="AVID"/>
+      <xs:enumeration value="GEAR UP"/>
+      <xs:enumeration value="Green Dot Public Schools"/>
+      <xs:enumeration value="KIPP Academy"/>
+      <xs:enumeration value="Noble Charter"/>
+      <xs:enumeration value="Philadelphia Futures"/>
+      <xs:enumeration value="PUC"/>
+      <xs:enumeration value="Upward Bound"/>
+      <xs:enumeration value="Upward Bound - Math and Science"/>
+      <xs:enumeration value="YES Charter"/>
+      <xs:enumeration value="Breakthrough Austin"/>
+      <xs:enumeration value="IDEA Academy"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MaritalStatusList">
+    <xs:annotation>
+      <xs:documentation>The list of marital status choices</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Single"/>
+      <xs:enumeration value="Married"/>
+      <xs:enumeration value="Re-Married"/>
+      <xs:enumeration value="Divorced"/>
+      <xs:enumeration value="Legally Separated"/>
+      <xs:enumeration value="Informally Separated"/>
+      <xs:enumeration value="Widowed"/>
+      <xs:enumeration value="Deceased"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Reference">
+    <xs:annotation>
+      <xs:documentation>Type that represents a person who is not a student nor a relative, for example counselors, recommenders, etc.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReferenceName" type="sds:Name" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full name detail of the reference</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReferenceContactInfo" type="sds:ContactInfo" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Methods by which to reach the person</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Relationship" type="sds:RelationshipList">
+        <xs:annotation>
+          <xs:documentation>The nature of the relationship between the person and the student when not family</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RelationshipOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description when 'other' was chosen</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="YearsKnown" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The number of years that the person has known the student</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TitleOrOccupation" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's title or occupation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompanyName" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The name of the organization</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReferenceAddress" type="sds:Address" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's full address</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Spouse">
+    <xs:annotation>
+      <xs:documentation>Type that represents a student's spouse</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SpouseName" type="sds:Name">
+        <xs:annotation>
+          <xs:documentation>The person's salutation, such as Mr., Mrs., Dr. and so on</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Employed" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the person is currently employed</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TitleOrOccupation" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's title or occupation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompanyName" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The name of the organization</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SpouseIncome" type="sds:Money" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's income</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Disabled" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the person indicates a disbility</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DisabilityDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The description of a person's disability</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WorkingHoursPerWeek" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>the number of hours per week that the person works</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SpouseEducationLevel" type="sds:EducationLevel" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's education level</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Relative">
+    <xs:annotation>
+      <xs:documentation>Type that represents a person who is a relative of the student, for example father, mother, uncle, etc.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RelativeName" type="sds:Name" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's salutation, such as Mr., Mrs., Dr. and so on</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Relation" type="sds:FamilyTitlesList">
+        <xs:annotation>
+          <xs:documentation>The type of relative defined by the relationships in a family tree</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RelationOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The type of relative described when the 'other' choice is selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Living" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the relative is alive or deceased</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthDate" type="xs:date" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Person's date of birth</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MaritalStatus" type="sds:MaritalStatusList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's marital status</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Employed" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the person is currently employed</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TitleOrOccupation" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's title or occupation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompanyName" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The name of the organization</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RelativeIncome" type="sds:Money" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's income</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Disabled" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the person indicates a disbility</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DisabilityDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The description of a person's disability</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WorkingHoursPerWeek" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>the number of hours per week that the person works</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RelativeEducationLevel" type="sds:EducationLevel" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Person's highest completed level of school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="RelationshipList">
+    <xs:annotation>
+      <xs:documentation>The different relationships that a person can have</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Counselor"/>
+      <xs:enumeration value="Registrar"/>
+      <xs:enumeration value="Supervisor"/>
+      <xs:enumeration value="Recommender"/>
+      <xs:enumeration value="Teacher/Professor"/>
+      <xs:enumeration value="Relative"/>
+      <xs:enumeration value="Mentor"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ScholarshipPurpose">
+    <xs:annotation>
+      <xs:documentation>The student's reasons for pursuing a scholarship</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Purpose" type="sds:ScholarshipPurposeList">
+        <xs:annotation>
+          <xs:documentation>The intended purpose of the student's scholarship application</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PurposeOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ScholarshipPurposeList">
+    <xs:annotation>
+      <xs:documentation>The types of schools for which a student may use a scholarship</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="High school"/>
+      <xs:enumeration value="Certificate program"/>
+      <xs:enumeration value="2-year program"/>
+      <xs:enumeration value="4-year program"/>
+      <xs:enumeration value="Graduate program"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="School">
+    <xs:annotation>
+      <xs:documentation>A type to store typical school information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SchoolName" type="sds:ShortString">
+        <xs:annotation>
+          <xs:documentation>The official name of the school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NCESCode" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The National Center for Education Statistics (NCES) code for the school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CEEBCode" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The College Board registry number for the school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SchoolType" type="sds:SchoolTypesList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The type of the school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherSchoolDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SchoolAddress" type="sds:Address" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full address of the school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="SchoolTypesList">
+    <xs:annotation>
+      <xs:documentation>The types of schools that a student could attend</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Elementary school"/>
+      <xs:enumeration value="Middle school"/>
+      <xs:enumeration value="High school"/>
+      <xs:enumeration value="Technical school"/>
+      <xs:enumeration value="College"/>
+      <xs:enumeration value="University"/>
+      <xs:enumeration value="Home school"/>
+      <xs:enumeration value="Graduate school"/>
+      <xs:enumeration value="Other school"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Enrollment">
+    <xs:annotation>
+      <xs:documentation>The types schools in which a student is enrolled</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="School" type="sds:School">
+        <xs:annotation>
+          <xs:documentation>The student's school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SchoolProgram" type="sds:SchoolProgramTypesList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The school program in which the student enrolled</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EnrollmentOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpectedGraduationDate" type="xs:date" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The expected graduation date from the program</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="SchoolProgramTypesList">
+    <xs:annotation>
+      <xs:documentation>The types of school enrollments available to a student</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Not in school"/>
+      <xs:enumeration value="High school"/>
+      <xs:enumeration value="Certificate program"/>
+      <xs:enumeration value="2-year program"/>
+      <xs:enumeration value="4-year program"/>
+      <xs:enumeration value="Graduate program"/>
+      <xs:enumeration value="Home school program"/>
+      <xs:enumeration value="High school equivalence (GED) program"/>
+      <xs:enumeration value="Other program"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="GraduationInfo">
+    <xs:annotation>
+      <xs:documentation>The student's graduation and/or GED information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Graduated" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Whether the student has graduated from any school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GraduationType" type="sds:SchoolProgramTypesList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The type of school from which the student graduated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GraduationTypeOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The free text explanation when the student chose 'other'</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GraduationSchoolName" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The school where the student graduated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GraduationDate" type="xs:date" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The date that the student graduated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GraduationCity" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The city where the student graduated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GraduationCounty" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The county where the student graduated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GraduationStateorProvince" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The state where the student graduated (do not abbreviate)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GraduationZIPOrPostalCode" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The school's zip or postal code where the student graduated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GraduationCountry" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The country where the student graduated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CollegeChoice">
+    <xs:annotation>
+      <xs:documentation>A college choice that the student has made</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CollegeName" type="sds:ShortString">
+        <xs:annotation>
+          <xs:documentation>The college choice name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NCESCode" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The National Center for Education Statistics (NCES) code for the school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CEEBCode" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The College Board registry number for the school</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CollegeChoiceRank" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The rank of the college choice per the student's order of preference, for example first, second, third, etc.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CollegeApplicationStatus" type="sds:ApplicationStatusList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The status of a student's application to a college</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CollegeApplicationStatusOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ApplicationStatusList">
+    <xs:annotation>
+      <xs:documentation>The list of application status choices</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Not yet applied"/>
+      <xs:enumeration value="Applied"/>
+      <xs:enumeration value="Accepted"/>
+      <xs:enumeration value="Waiting List"/>
+      <xs:enumeration value="Denied"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ClassRank">
+    <xs:annotation>
+      <xs:documentation>The student's class rank information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SchoolName" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The name of the school for which class rank is reported</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SchoolType" type="sds:SchoolTypesList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The type of the school for which class rank is reported</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherSchoolDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SchoolRanksStudents" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Whether the school ranks students</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="System" type="sds:RankSystemsList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The system used by the school to rank students</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SystemOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClassRank" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The student's class rank</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClassSize" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The student's class size when used to rank the student</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClassRankPercentile" type="xs:decimal" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The student's class rank expressed as a percentile</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClassRankPercentileBest" type="xs:decimal" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether 100% or 1% is considered the best class rank, when expressed as a percentile</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherRank" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The student's class rank using an alternate method of class ranking</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherRankDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RankMethod" type="sds:RankMethodsList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The method used to deterime the student's class rank, whether calculated or estimated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="RankMethodsList">
+    <xs:annotation>
+      <xs:documentation>The possible methods to determine a student's class rank</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Calculated"/>
+      <xs:enumeration value="Estimated"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RankSystemsList">
+    <xs:annotation>
+      <xs:documentation>The possible student ranking measurements to communicate a student's class rank</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Integer"/>
+      <xs:enumeration value="Decile"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TestsList">
+    <xs:annotation>
+      <xs:documentation>The different tests that a person can take</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="SAT Critical Reading"/>
+      <xs:enumeration value="SAT Verbal (Obsolete)"/>
+      <xs:enumeration value="SAT Math"/>
+      <xs:enumeration value="SAT Writing"/>
+      <xs:enumeration value="ACT Composite"/>
+      <xs:enumeration value="ACT English"/>
+      <xs:enumeration value="ACT Math"/>
+      <xs:enumeration value="ACT Reading"/>
+      <xs:enumeration value="ACT Science"/>
+      <xs:enumeration value="ACT Writing"/>
+      <xs:enumeration value="PSAT Critical Reading"/>
+      <xs:enumeration value="PSAT Verbal (Obsolete)"/>
+      <xs:enumeration value="PSAT Math"/>
+      <xs:enumeration value="PSAT Writing"/>
+      <xs:enumeration value="PSAT Selection Index"/>
+      <xs:enumeration value="GMAT Verbal"/>
+      <xs:enumeration value="GMAT Quantitative"/>
+      <xs:enumeration value="GMAT Analytical Writing Assessment"/>
+      <xs:enumeration value="GRE Verbal"/>
+      <xs:enumeration value="GRE Quantitative"/>
+      <xs:enumeration value="LSAT Verbal"/>
+      <xs:enumeration value="LSAT Quant"/>
+      <xs:enumeration value="LSAT Analytic"/>
+      <xs:enumeration value="TOEFL Listening"/>
+      <xs:enumeration value="TOEFL Structure/Writing"/>
+      <xs:enumeration value="TOEFL Reading"/>
+      <xs:enumeration value="TOEFL Total Score"/>
+      <xs:enumeration value="MCAT Verbal Reasoning"/>
+      <xs:enumeration value="MCAT Physical Sciences"/>
+      <xs:enumeration value="MCAT Writing Sample"/>
+      <xs:enumeration value="MCAT Biological Sciences"/>
+      <xs:enumeration value="AP Art History"/>
+      <xs:enumeration value="AP Biology"/>
+      <xs:enumeration value="AP Calculus AB"/>
+      <xs:enumeration value="AP Calculus BC"/>
+      <xs:enumeration value="AP Chemistry"/>
+      <xs:enumeration value="AP Chinese Language and Culture"/>
+      <xs:enumeration value="AP Computer Science A"/>
+      <xs:enumeration value="AP Computer Science AB"/>
+      <xs:enumeration value="AP Macroeconomics"/>
+      <xs:enumeration value="AP Microeconomics"/>
+      <xs:enumeration value="AP English Language"/>
+      <xs:enumeration value="AP English Literature"/>
+      <xs:enumeration value="AP Environmental Science"/>
+      <xs:enumeration value="AP European History"/>
+      <xs:enumeration value="AP French Language"/>
+      <xs:enumeration value="AP French Literature"/>
+      <xs:enumeration value="AP German Language"/>
+      <xs:enumeration value="AP Comp Government and Politics"/>
+      <xs:enumeration value="AP U.S. Government and Politics"/>
+      <xs:enumeration value="AP Human Geography"/>
+      <xs:enumeration value="AP Italian Language and Culture"/>
+      <xs:enumeration value="AP Japanese Language and Culture"/>
+      <xs:enumeration value="AP Latin Literature"/>
+      <xs:enumeration value="AP Latin: Vergil"/>
+      <xs:enumeration value="AP Music Theory"/>
+      <xs:enumeration value="AP Physics B"/>
+      <xs:enumeration value="AP Physics C"/>
+      <xs:enumeration value="AP Psychology"/>
+      <xs:enumeration value="AP Spanish Language"/>
+      <xs:enumeration value="AP Spanish Literature"/>
+      <xs:enumeration value="AP Statistics"/>
+      <xs:enumeration value="AP Studio Art"/>
+      <xs:enumeration value="AP U.S. History"/>
+      <xs:enumeration value="AP World History "/>
+      <xs:enumeration value="GED Score"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="TestScore">
+    <xs:annotation>
+      <xs:documentation>Type that represents a particular test score</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Test" type="sds:TestsList">
+        <xs:annotation>
+          <xs:documentation>The student's test taken</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TestOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description when they chose 'other'</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Score" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>The student's test score</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ScoreType" type="sds:ScoreTypes" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the student's score was the most recent score or the highest score ever achieved on the test</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ScoreNumericType" type="sds:ScoreNumericTypes" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The type of number used to report the test score</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ScoreDate" type="xs:date" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The date the score was achieved</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ScoreTypes">
+    <xs:annotation>
+      <xs:documentation>Whether the student's score was the most recent score or the highest score ever achieved on the test</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Most recent score"/>
+      <xs:enumeration value="Highest ever score"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ScoreNumericTypes">
+    <xs:annotation>
+      <xs:documentation>The type of numbers used to report the test score</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Integer"/>
+      <xs:enumeration value="Percent"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="GPA">
+    <xs:annotation>
+      <xs:documentation>Type that represents the student's GPA information over multiple years</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SchoolName" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The name of the school for which GPA is reported</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SchoolType" type="sds:SchoolTypesList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The type of the school for which GPA is reported</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherSchoolDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrentSchoolCalculatesGPA" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Whether or not the school calculates student GPA</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CumulativeGPA" type="sds:GPAInfo" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The student's current cumulative grade point average for the current school year</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GPAsPerSchoolYear" type="sds:GPAInfo" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The student's list of grade point averages for previous school years</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GPAInfo">
+    <xs:annotation>
+      <xs:documentation>Type that represents the student's GPA for a particular school year</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SchoolYear" type="sds:SchoolYearsList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The school year for which a grade point average is reported</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GPA" type="sds:ShortString">
+        <xs:annotation>
+          <xs:documentation>The student's grade point average for the given school year</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Weighted" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the student's grade point average is weighted</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Scale" type="sds:GradingScaleList">
+        <xs:annotation>
+          <xs:documentation>The scale used to calculate the student's grade point average</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ScaleOther" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="GradingScaleList">
+    <xs:annotation>
+      <xs:documentation>The scale used to calculate the student's grade point average</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="4.0"/>
+      <xs:enumeration value="4.3"/>
+      <xs:enumeration value="5.0"/>
+      <xs:enumeration value="100"/>
+      <xs:enumeration value="Alphabetic"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="GovernmentAid">
+    <xs:annotation>
+      <xs:documentation>Type that represtents the various government programs that a student could be associated with</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Programs" type="sds:GovernmentPrograms" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Government aid programs of which the student has been a recipient</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProgramOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="GovernmentPrograms">
+    <xs:annotation>
+      <xs:documentation>The list of government aid programs</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="FreeOrReducedSchoolLunch">
+        <xs:annotation>
+          <xs:documentation>The National School Lunch Program (NSLP) from the U.S. Department of Agriculture</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SpecialSupplementalNutritionWIC">
+        <xs:annotation>
+          <xs:documentation>The Special Supplemental Nutrition Program for Women, Infants, and Children from the U.S. Department of Agriculture</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TemporaryAssistanceToNeedyFamilies">
+        <xs:annotation>
+          <xs:documentation>The Temporary Assistance for Needy Families (TANF) program from the U.S. Department of Health and Human Services</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="LIHEAPOrOtherUtilityAssistance">
+        <xs:annotation>
+          <xs:documentation>The Low Income Home Energy Assistance Program (LIHEAP) from the U.S. Department of Health and Human Services</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SupplementalSocialSecurity">
+        <xs:annotation>
+          <xs:documentation>Supplemental Security Income (SSI) from the U.S. Social Security Administration</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OtherGovernmentProgram">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Class">
+    <xs:annotation>
+      <xs:documentation>The peron's class information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ClassName" type="sds:ClassList">
+        <xs:annotation>
+          <xs:documentation>The name of the student's course</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClassNameOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The name of the student's course if 'other' was chosen</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Year" type="sds:SchoolYearsList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The school year during which the student participated in the class</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="YearOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Status" type="sds:ClassStatusList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The status of a student's participation in the course</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Grade" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The grade that the student earned in a given couse</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Scale" type="sds:GradingScaleList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The scale used to calculate the student's grade point average</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Type" type="sds:ClassTypeList" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Any special designation of the course</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TypeOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SchoolName" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The name of the school where the student attended the class</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ClassList">
+    <xs:annotation>
+      <xs:documentation>The different classes that a person can attend</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="English grade 9"/>
+      <xs:enumeration value="English grade 10"/>
+      <xs:enumeration value="English grade 11"/>
+      <xs:enumeration value="English grade 12"/>
+      <xs:enumeration value="Algebra 1"/>
+      <xs:enumeration value="Geometry"/>
+      <xs:enumeration value="Algebra 2"/>
+      <xs:enumeration value="Trigonometry"/>
+      <xs:enumeration value="Pre-Calculus"/>
+      <xs:enumeration value="Calculus"/>
+      <xs:enumeration value="Other advanced math"/>
+      <xs:enumeration value="Computer science"/>
+      <xs:enumeration value="Earth or general science"/>
+      <xs:enumeration value="Biology"/>
+      <xs:enumeration value="Chemistry"/>
+      <xs:enumeration value="Physics"/>
+      <xs:enumeration value="Anatomy"/>
+      <xs:enumeration value="Physiology"/>
+      <xs:enumeration value="Other science"/>
+      <xs:enumeration value="U.S. History"/>
+      <xs:enumeration value="World History"/>
+      <xs:enumeration value="Government or civics"/>
+      <xs:enumeration value="Economics"/>
+      <xs:enumeration value="World culture or global studies"/>
+      <xs:enumeration value="Geography"/>
+      <xs:enumeration value="Psychology"/>
+      <xs:enumeration value="Sociology"/>
+      <xs:enumeration value="Foreign language"/>
+      <xs:enumeration value="Philosophy"/>
+      <xs:enumeration value="Other social studies"/>
+      <xs:enumeration value="Other courses"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ClassStatusList">
+    <xs:annotation>
+      <xs:documentation>The status of a student's participation in a given course</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Complete"/>
+      <xs:enumeration value="In progress"/>
+      <xs:enumeration value="Pending"/>
+      <xs:enumeration value="Not taken"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ClassTypeList">
+    <xs:annotation>
+      <xs:documentation>The type of student courses</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Senior"/>
+      <xs:enumeration value="Honors"/>
+      <xs:enumeration value="AP"/>
+      <xs:enumeration value="IB"/>
+      <xs:enumeration value="Dual enrollment"/>
+      <xs:enumeration value="Special education"/>
+      <xs:enumeration value="Remedial"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ActivityTypeList">
+    <xs:annotation>
+      <xs:documentation>The types of student activities</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Community service or volunteering"/>
+      <xs:enumeration value="Employment"/>
+      <xs:enumeration value="Athletics"/>
+      <xs:enumeration value="Arts"/>
+      <xs:enumeration value="School organization or club"/>
+      <xs:enumeration value="Major award or honor"/>
+      <xs:enumeration value="College readiness program"/>
+      <xs:enumeration value="Foreign travel or study"/>
+      <xs:enumeration value="Home and family responsibilities"/>
+      <xs:enumeration value="Hobby"/>
+      <xs:enumeration value="Government"/>
+      <xs:enumeration value="Internship"/>
+      <xs:enumeration value="Military"/>
+      <xs:enumeration value="Other activity"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Activity">
+    <xs:annotation>
+      <xs:documentation>The person's activity information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Type" type="sds:ActivityTypeList">
+        <xs:annotation>
+          <xs:documentation>The type of student activity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Year" type="sds:SchoolYearsList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The school year during which the student participated in the activity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="YearOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The description of the student's activity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationName" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The name of the organization</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationAddress" type="sds:Address" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The organization's full address</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StartDate" type="xs:date" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>When the student started the activity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="xs:date" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>When the student stopped the activity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GraduationRequirementHours" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The number of activity hours that were part of a graduation requirement</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SummerHoursPerWeek" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The summer hours per week that the student participated in the activity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SummerWeeksPerYear" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The summer weeks per year that the student participated in the activity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SchoolSeasonHoursPerWeek" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The school season hours per week that the student participated in the activity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SchoolSeasonWeeksPerYear" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The school season weeks per year that the student participated in the activity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="SchoolYearsList">
+    <xs:annotation>
+      <xs:documentation>The years of school that a student can attend</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="High School Grade 9"/>
+      <xs:enumeration value="High School Grade 10"/>
+      <xs:enumeration value="High School Grade 11"/>
+      <xs:enumeration value="High School Grade 12"/>
+      <xs:enumeration value="College Year 1"/>
+      <xs:enumeration value="College Year 2"/>
+      <xs:enumeration value="College Year 3"/>
+      <xs:enumeration value="College Year 4"/>
+      <xs:enumeration value="College Year 5"/>
+      <xs:enumeration value="College Year 6"/>
+      <xs:enumeration value="College Year 7"/>
+      <xs:enumeration value="College Year 8"/>
+      <xs:enumeration value="Graduate School Year 1"/>
+      <xs:enumeration value="Graduate School Year 2"/>
+      <xs:enumeration value="Graduate School Year 3"/>
+      <xs:enumeration value="Graduate School Year 4"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FamilyTitlesList">
+    <xs:annotation>
+      <xs:documentation>The different titles for a family member</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Spouse"/>
+      <xs:enumeration value="Guardian"/>
+      <xs:enumeration value="Significant Other"/>
+      <xs:enumeration value="Domestic Partner"/>
+      <xs:enumeration value="Father"/>
+      <xs:enumeration value="Mother"/>
+      <xs:enumeration value="Grandfather"/>
+      <xs:enumeration value="Grandmother"/>
+      <xs:enumeration value="Son"/>
+      <xs:enumeration value="Daughter"/>
+      <xs:enumeration value="Fosterparent"/>
+      <xs:enumeration value="Fosterchild"/>
+      <xs:enumeration value="Grandson"/>
+      <xs:enumeration value="Granddaughter"/>
+      <xs:enumeration value="Brother"/>
+      <xs:enumeration value="Sister"/>
+      <xs:enumeration value="Uncle"/>
+      <xs:enumeration value="Aunt"/>
+      <xs:enumeration value="Cousin"/>
+      <xs:enumeration value="Nephew"/>
+      <xs:enumeration value="Niece"/>
+      <xs:enumeration value="Stepfather"/>
+      <xs:enumeration value="Stepmother"/>
+      <xs:enumeration value="Stepson"/>
+      <xs:enumeration value="Stepdaughter"/>
+      <xs:enumeration value="Stepparent"/>
+      <xs:enumeration value="Stepchild"/>
+      <xs:enumeration value="Stepbrother"/>
+      <xs:enumeration value="Stepsister"/>
+      <xs:enumeration value="Father in law"/>
+      <xs:enumeration value="Mother in law"/>
+      <xs:enumeration value="Son in law"/>
+      <xs:enumeration value="Daughter in law"/>
+      <xs:enumeration value="Parent in law"/>
+      <xs:enumeration value="Child in law"/>
+      <xs:enumeration value="Brother in law"/>
+      <xs:enumeration value="Sister in law"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="EducationLevel">
+    <xs:annotation>
+      <xs:documentation>The levels of education for a person</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="EducationLevel" type="sds:EducationLevelsList">
+        <xs:annotation>
+          <xs:documentation>The highest level of education that the person completed</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EducationLevelOther" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="EducationLevelsList">
+    <xs:annotation>
+      <xs:documentation>The levels of education that a person may indicate</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="No school"/>
+      <xs:enumeration value="Elementary school"/>
+      <xs:enumeration value="Middle school"/>
+      <xs:enumeration value="Some high school"/>
+      <xs:enumeration value="High school graduate"/>
+      <xs:enumeration value="Some college"/>
+      <xs:enumeration value="Associate's degree"/>
+      <xs:enumeration value="Bachelor's degree"/>
+      <xs:enumeration value="Master's degree"/>
+      <xs:enumeration value="Doctorate"/>
+      <xs:enumeration value="Professional degree"/>
+      <xs:enumeration value="Unknown"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="HomeEnvironment">
+    <xs:annotation>
+      <xs:documentation>The person's home environment information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LivingWith" type="sds:LivingWithList" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The type of people with whom the student lives</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LivingWithOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResidentsInHomeCount" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The number of people that live in the student's home, not counting themselves</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NativeLanguage" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The language that the student speaks at home or what they indicate as their native language</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="LivingWithList">
+    <xs:annotation>
+      <xs:documentation>The list of people with whom the student might live</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Alone"/>
+      <xs:enumeration value="Mother"/>
+      <xs:enumeration value="Father"/>
+      <xs:enumeration value="Step-parents"/>
+      <xs:enumeration value="Sibling"/>
+      <xs:enumeration value="Grandparents"/>
+      <xs:enumeration value="Guardian"/>
+      <xs:enumeration value="Adopted family"/>
+      <xs:enumeration value="Foster family"/>
+      <xs:enumeration value="Other relatives"/>
+      <xs:enumeration value="Spouse or significant other"/>
+      <xs:enumeration value="Your children"/>
+      <xs:enumeration value="Friends"/>
+      <xs:enumeration value="Group home"/>
+      <xs:enumeration value="Homeless"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Money">
+    <xs:annotation>
+      <xs:documentation>An amount of money</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Amount" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>The money amount</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Currency" type="sds:CurrencyList">
+        <xs:annotation>
+          <xs:documentation>The national currency of the amount</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CurrencyList">
+    <xs:annotation>
+      <xs:documentation>Currency abbreviations derived from the ISO 4217 standard</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="USD"/>
+      <xs:enumeration value="CAD"/>
+      <xs:enumeration value="AED"/>
+      <xs:enumeration value="AFN"/>
+      <xs:enumeration value="ALL"/>
+      <xs:enumeration value="AMD"/>
+      <xs:enumeration value="ANG"/>
+      <xs:enumeration value="AOA"/>
+      <xs:enumeration value="ARS"/>
+      <xs:enumeration value="AUD"/>
+      <xs:enumeration value="AWG"/>
+      <xs:enumeration value="AZN"/>
+      <xs:enumeration value="BAM"/>
+      <xs:enumeration value="BBD"/>
+      <xs:enumeration value="BDT"/>
+      <xs:enumeration value="BGN"/>
+      <xs:enumeration value="BHD"/>
+      <xs:enumeration value="BIF"/>
+      <xs:enumeration value="BMD"/>
+      <xs:enumeration value="BND"/>
+      <xs:enumeration value="BOB"/>
+      <xs:enumeration value="BRL"/>
+      <xs:enumeration value="BSD"/>
+      <xs:enumeration value="BTN"/>
+      <xs:enumeration value="BWP"/>
+      <xs:enumeration value="BYR"/>
+      <xs:enumeration value="BZD"/>
+      <xs:enumeration value="CDF"/>
+      <xs:enumeration value="CHF"/>
+      <xs:enumeration value="CLP"/>
+      <xs:enumeration value="CNY"/>
+      <xs:enumeration value="COP"/>
+      <xs:enumeration value="CRC"/>
+      <xs:enumeration value="CUP"/>
+      <xs:enumeration value="CVE"/>
+      <xs:enumeration value="CYP"/>
+      <xs:enumeration value="CZK"/>
+      <xs:enumeration value="DJF"/>
+      <xs:enumeration value="DKK"/>
+      <xs:enumeration value="DOP"/>
+      <xs:enumeration value="DZD"/>
+      <xs:enumeration value="EEK"/>
+      <xs:enumeration value="EGP"/>
+      <xs:enumeration value="ERN"/>
+      <xs:enumeration value="ETB"/>
+      <xs:enumeration value="EUR"/>
+      <xs:enumeration value="FJD"/>
+      <xs:enumeration value="FKP"/>
+      <xs:enumeration value="GBP"/>
+      <xs:enumeration value="GEL"/>
+      <xs:enumeration value="GGP"/>
+      <xs:enumeration value="GHS"/>
+      <xs:enumeration value="GIP"/>
+      <xs:enumeration value="GMD"/>
+      <xs:enumeration value="GNF"/>
+      <xs:enumeration value="GTQ"/>
+      <xs:enumeration value="GYD"/>
+      <xs:enumeration value="HKD"/>
+      <xs:enumeration value="HNL"/>
+      <xs:enumeration value="HRK"/>
+      <xs:enumeration value="HTG"/>
+      <xs:enumeration value="HUF"/>
+      <xs:enumeration value="IDR"/>
+      <xs:enumeration value="ILS"/>
+      <xs:enumeration value="IMP"/>
+      <xs:enumeration value="INR"/>
+      <xs:enumeration value="IQD"/>
+      <xs:enumeration value="IRR"/>
+      <xs:enumeration value="ISK"/>
+      <xs:enumeration value="JEP"/>
+      <xs:enumeration value="JMD"/>
+      <xs:enumeration value="JOD"/>
+      <xs:enumeration value="JPY"/>
+      <xs:enumeration value="KES"/>
+      <xs:enumeration value="KGS"/>
+      <xs:enumeration value="KHR"/>
+      <xs:enumeration value="KMF"/>
+      <xs:enumeration value="KPW"/>
+      <xs:enumeration value="KWD"/>
+      <xs:enumeration value="KYD"/>
+      <xs:enumeration value="KZT"/>
+      <xs:enumeration value="LAK"/>
+      <xs:enumeration value="LBP"/>
+      <xs:enumeration value="LKR"/>
+      <xs:enumeration value="LRD"/>
+      <xs:enumeration value="LSL"/>
+      <xs:enumeration value="LTL"/>
+      <xs:enumeration value="LVL"/>
+      <xs:enumeration value="LYD"/>
+      <xs:enumeration value="MAD"/>
+      <xs:enumeration value="MDL"/>
+      <xs:enumeration value="MGA"/>
+      <xs:enumeration value="MKD"/>
+      <xs:enumeration value="MMK"/>
+      <xs:enumeration value="MNT"/>
+      <xs:enumeration value="MOP"/>
+      <xs:enumeration value="MRO"/>
+      <xs:enumeration value="MTL"/>
+      <xs:enumeration value="MUR"/>
+      <xs:enumeration value="MVR"/>
+      <xs:enumeration value="MWK"/>
+      <xs:enumeration value="MXN"/>
+      <xs:enumeration value="MYR"/>
+      <xs:enumeration value="MZN"/>
+      <xs:enumeration value="NAD"/>
+      <xs:enumeration value="NGN"/>
+      <xs:enumeration value="NIO"/>
+      <xs:enumeration value="NOK"/>
+      <xs:enumeration value="NPR"/>
+      <xs:enumeration value="NZD"/>
+      <xs:enumeration value="OMR"/>
+      <xs:enumeration value="PAB"/>
+      <xs:enumeration value="PEN"/>
+      <xs:enumeration value="PGK"/>
+      <xs:enumeration value="PHP"/>
+      <xs:enumeration value="PKR"/>
+      <xs:enumeration value="PLN"/>
+      <xs:enumeration value="PYG"/>
+      <xs:enumeration value="QAR"/>
+      <xs:enumeration value="RON"/>
+      <xs:enumeration value="RSD"/>
+      <xs:enumeration value="RUB"/>
+      <xs:enumeration value="RWF"/>
+      <xs:enumeration value="SAR"/>
+      <xs:enumeration value="SBD"/>
+      <xs:enumeration value="SCR"/>
+      <xs:enumeration value="SDG"/>
+      <xs:enumeration value="SEK"/>
+      <xs:enumeration value="SGD"/>
+      <xs:enumeration value="SHP"/>
+      <xs:enumeration value="SKK"/>
+      <xs:enumeration value="SLL"/>
+      <xs:enumeration value="SOS"/>
+      <xs:enumeration value="SPL"/>
+      <xs:enumeration value="SRD"/>
+      <xs:enumeration value="STD"/>
+      <xs:enumeration value="SVC"/>
+      <xs:enumeration value="SYP"/>
+      <xs:enumeration value="SZL"/>
+      <xs:enumeration value="THB"/>
+      <xs:enumeration value="TJS"/>
+      <xs:enumeration value="TMM"/>
+      <xs:enumeration value="TND"/>
+      <xs:enumeration value="TOP"/>
+      <xs:enumeration value="TRY"/>
+      <xs:enumeration value="TTD"/>
+      <xs:enumeration value="TVD"/>
+      <xs:enumeration value="TWD"/>
+      <xs:enumeration value="TZS"/>
+      <xs:enumeration value="UAH"/>
+      <xs:enumeration value="UGX"/>
+      <xs:enumeration value="UYU"/>
+      <xs:enumeration value="UZS"/>
+      <xs:enumeration value="VEB"/>
+      <xs:enumeration value="VEF"/>
+      <xs:enumeration value="VND"/>
+      <xs:enumeration value="VUV"/>
+      <xs:enumeration value="WST"/>
+      <xs:enumeration value="XAF"/>
+      <xs:enumeration value="XAG"/>
+      <xs:enumeration value="XAU"/>
+      <xs:enumeration value="XCD"/>
+      <xs:enumeration value="XDR"/>
+      <xs:enumeration value="XOF"/>
+      <xs:enumeration value="XPD"/>
+      <xs:enumeration value="XPF"/>
+      <xs:enumeration value="XPT"/>
+      <xs:enumeration value="YER"/>
+      <xs:enumeration value="ZAR"/>
+      <xs:enumeration value="ZMK"/>
+      <xs:enumeration value="ZWD"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ContactInfo">
+    <xs:annotation>
+      <xs:documentation>The ways to contact a person</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Email" type="sds:ShortString">
+        <xs:annotation>
+          <xs:documentation>The person's email address</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrimaryPhoneNumber" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's primary telephone number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsPrimaryPhoneTextCapable" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the telephone can receive text messages</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AlternatePhoneNumber" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's alternate telephone number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsAlternatePhoneTextCapable" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Whether the telephone can receive text messages</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FaxNumber" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's fax phone number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherMessagingAddress" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's alternate messaging address or nickname</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherMessagingAddressType" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The name of the alternate messaging system, for example MySpace, Facebook, Yahoo Messenger, MSN Messenger, AOL Instant Messenger, and so on</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PreferredContactMethod" type="sds:ContactMethodsList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The contact method that the person indicates is the preferred way</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ContactMethodsList">
+    <xs:annotation>
+      <xs:documentation>The list of possible contact methods</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="PrimaryPhone"/>
+      <xs:enumeration value="AlternatePhone"/>
+      <xs:enumeration value="Fax"/>
+      <xs:enumeration value="TextMessagePrimaryPhone"/>
+      <xs:enumeration value="TextMessageAlternatePhone"/>
+      <xs:enumeration value="OtherMessaging"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Name">
+    <xs:annotation>
+      <xs:documentation>The person's full name information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Salutation" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's salutation, such as Mr., Mrs., Dr. and so on</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FirstName" type="sds:ShortString">
+        <xs:annotation>
+          <xs:documentation>The person's first name, given name, or forename</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MiddleName" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's middle name, if applicable</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MiddleName2" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's second middle name, if applicable</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LastName" type="sds:ShortString">
+        <xs:annotation>
+          <xs:documentation>The person's last name, surname, or family name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Suffix" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The person's name suffix, such as II, Jr., Sr., and so on</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PreferredName" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The name that the person prefers to be called</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+ 
+ 
+  <xs:simpleType name="GenderList">
+    <xs:annotation>
+      <xs:documentation>The person's gender</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Male"/>
+      <xs:enumeration value="Female"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GenderDetailList">
+    <xs:annotation>
+      <xs:documentation>The person's detailed gender list</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Transgender"/>
+      <xs:enumeration value="Intersex"/>
+      <xs:enumeration value="Male to Female"/>
+      <xs:enumeration value="Female to Male"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:complexType name="Address">
+    <xs:annotation>
+      <xs:documentation>An address for a person or organization in a standard format</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AddressType" type="sds:AddressTypesList" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The type of address provided</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddressLine1" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The first line of the street address</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddressLine2" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The second line of the street address</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddressLine3" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The third line of the street address</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddressLine4" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The fourth line of the street address</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="City" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The city</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="County" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The county, if applicable</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StateOrProvince" type="sds:ShortString">
+        <xs:annotation>
+          <xs:documentation>The state or province (do not abbreviate)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ZipOrPostalCode" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The zip code or postal code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Country" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The country</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="AddressTypesList">
+    <xs:annotation>
+      <xs:documentation>The different kinds of addresses for a person</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="Current address"/>
+      <xs:enumeration value="Permanent address"/>
+      <xs:enumeration value="Mailing/shipping address"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Citizenship">
+    <xs:annotation>
+      <xs:documentation>Details about a person's citizenship for a country</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CitizenshipStatus" type="sds:CitizenshipStatusList">
+        <xs:annotation>
+          <xs:documentation>The status of the person's citizenship</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CitizenshipStatusOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CitizenshipDate" type="xs:date" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The date of the person's citizenship, if applicable</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CitizenshipCountry" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The country of which the person is a citizen</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CitizenshipStatusList">
+    <xs:annotation>
+      <xs:documentation>The list of possible citizenship status</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="U.S. Citizen"/>
+      <xs:enumeration value="Canadian Citizen"/>
+      <xs:enumeration value="Resident Alien or Permanent Resident"/>
+      <xs:enumeration value="Refugee or Protected Person"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="BirthPlace">
+    <xs:annotation>
+      <xs:documentation>The location where a person was born</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="City" type="sds:ShortString" minOccurs="0"/>
+      <xs:element name="StateOrProvince" type="sds:ShortString"/>
+      <xs:element name="Country" type="sds:ShortString" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Race">
+    <xs:annotation>
+      <xs:documentation>Information about a person's race</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Race" type="sds:RacesList" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The person's indicated races</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RaceOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="RacesList">
+    <xs:annotation>
+      <xs:documentation>The official list of races according to the U.S. Census Bureau</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="AmericanIndianAndAlaskaNative"/>
+      <xs:enumeration value="AsianOrPacificIslander"/>
+      <xs:enumeration value="Black"/>
+      <xs:enumeration value="White"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Ethnicity">
+    <xs:annotation>
+      <xs:documentation>The person's ethnicity information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Ethnicity" type="sds:EthnicitiesList" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The person's indicated ethnicities</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EthnicityOtherDesc" type="sds:ShortString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The full text description provided when the 'other' choice was selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="EthnicitiesList">
+    <xs:annotation>
+      <xs:documentation>The list of ethnicity choices</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="sds:ShortString">
+      <xs:enumeration value="African"/>
+      <xs:enumeration value="AfricanAmerican"/>
+      <xs:enumeration value="Albanian"/>
+      <xs:enumeration value="American"/>
+      <xs:enumeration value="AmericanIndian"/>
+      <xs:enumeration value="Arab"/>
+      <xs:enumeration value="Armenian"/>
+      <xs:enumeration value="Asian"/>
+      <xs:enumeration value="AsianIndian"/>
+      <xs:enumeration value="Austrian"/>
+      <xs:enumeration value="Belgian"/>
+      <xs:enumeration value="Brazilian"/>
+      <xs:enumeration value="British"/>
+      <xs:enumeration value="Cambodian"/>
+      <xs:enumeration value="Canadian"/>
+      <xs:enumeration value="Chinese"/>
+      <xs:enumeration value="Colombian"/>
+      <xs:enumeration value="Croatian"/>
+      <xs:enumeration value="Cuban"/>
+      <xs:enumeration value="Czech"/>
+      <xs:enumeration value="Czechoslovakian"/>
+      <xs:enumeration value="Danish"/>
+      <xs:enumeration value="Dominican"/>
+      <xs:enumeration value="Dutch"/>
+      <xs:enumeration value="Ecuadorian"/>
+      <xs:enumeration value="Egyptian"/>
+      <xs:enumeration value="English"/>
+      <xs:enumeration value="European"/>
+      <xs:enumeration value="Filipino"/>
+      <xs:enumeration value="Finnish"/>
+      <xs:enumeration value="French"/>
+      <xs:enumeration value="FrenchCanadian"/>
+      <xs:enumeration value="German"/>
+      <xs:enumeration value="Greek"/>
+      <xs:enumeration value="Guatemalan"/>
+      <xs:enumeration value="Guyanese"/>
+      <xs:enumeration value="Haitian"/>
+      <xs:enumeration value="Hawaiian"/>
+      <xs:enumeration value="Hispanic"/>
+      <xs:enumeration value="Hmong"/>
+      <xs:enumeration value="Honduran"/>
+      <xs:enumeration value="Hungarian"/>
+      <xs:enumeration value="Iranian"/>
+      <xs:enumeration value="Irish"/>
+      <xs:enumeration value="Israeli"/>
+      <xs:enumeration value="Italian"/>
+      <xs:enumeration value="Jamaican"/>
+      <xs:enumeration value="Japanese"/>
+      <xs:enumeration value="Korean"/>
+      <xs:enumeration value="Laotian"/>
+      <xs:enumeration value="LatinAmerican"/>
+      <xs:enumeration value="Lebanese"/>
+      <xs:enumeration value="Lithuanian"/>
+      <xs:enumeration value="Mexican"/>
+      <xs:enumeration value="Nicaraguan"/>
+      <xs:enumeration value="Nigerian"/>
+      <xs:enumeration value="NorthernEuropean"/>
+      <xs:enumeration value="Norwegian"/>
+      <xs:enumeration value="Pakistani"/>
+      <xs:enumeration value="Panamanian"/>
+      <xs:enumeration value="Peruvian"/>
+      <xs:enumeration value="Polish"/>
+      <xs:enumeration value="Portuguese"/>
+      <xs:enumeration value="PuertoRican"/>
+      <xs:enumeration value="Romanian"/>
+      <xs:enumeration value="Russian"/>
+      <xs:enumeration value="Salvadoran"/>
+      <xs:enumeration value="Scandinavian"/>
+      <xs:enumeration value="Scotch-Irish"/>
+      <xs:enumeration value="Scottish"/>
+      <xs:enumeration value="Serbian"/>
+      <xs:enumeration value="Slavic"/>
+      <xs:enumeration value="Slovak"/>
+      <xs:enumeration value="Slovene"/>
+      <xs:enumeration value="Spaniard"/>
+      <xs:enumeration value="Spanish"/>
+      <xs:enumeration value="Swedish"/>
+      <xs:enumeration value="Swiss"/>
+      <xs:enumeration value="Syrian"/>
+      <xs:enumeration value="Taiwanese"/>
+      <xs:enumeration value="Thai"/>
+      <xs:enumeration value="TrinidadianAndTobagonian"/>
+      <xs:enumeration value="Turkish"/>
+      <xs:enumeration value="Ukrainian"/>
+      <xs:enumeration value="Vietnamese"/>
+      <xs:enumeration value="Welsh"/>
+      <xs:enumeration value="WestIndian"/>
+      <xs:enumeration value="WesternEuropean"/>
+      <xs:enumeration value="Yugoslavian"/>
+      <xs:enumeration value="Apache"/>
+      <xs:enumeration value="Blackfeet"/>
+      <xs:enumeration value="Cherokee"/>
+      <xs:enumeration value="Cheyenne"/>
+      <xs:enumeration value="Chickasaw"/>
+      <xs:enumeration value="Chippewa"/>
+      <xs:enumeration value="Choctaw"/>
+      <xs:enumeration value="Colville"/>
+      <xs:enumeration value="Comanche"/>
+      <xs:enumeration value="Cree"/>
+      <xs:enumeration value="Creek"/>
+      <xs:enumeration value="Crow"/>
+      <xs:enumeration value="Delaware"/>
+      <xs:enumeration value="Houma"/>
+      <xs:enumeration value="Iroquois"/>
+      <xs:enumeration value="Kiowa"/>
+      <xs:enumeration value="Latin American Indian"/>
+      <xs:enumeration value="Lumbee"/>
+      <xs:enumeration value="Menominee"/>
+      <xs:enumeration value="Navajo"/>
+      <xs:enumeration value="Osage"/>
+      <xs:enumeration value="Ottawa"/>
+      <xs:enumeration value="Paiute"/>
+      <xs:enumeration value="Pima"/>
+      <xs:enumeration value="Potawatomi"/>
+      <xs:enumeration value="Pueblo"/>
+      <xs:enumeration value="Puget Sound Salish"/>
+      <xs:enumeration value="Seminole"/>
+      <xs:enumeration value="Shoshone"/>
+      <xs:enumeration value="Sioux"/>
+      <xs:enumeration value="Tohono O’odham"/>
+      <xs:enumeration value="Ute"/>
+      <xs:enumeration value="Yakama"/>
+      <xs:enumeration value="Yaqui"/>
+      <xs:enumeration value="Yuman"/>
+      <xs:enumeration value="Alaska Athabascan"/>
+      <xs:enumeration value="Aleut"/>
+      <xs:enumeration value="Eskimo"/>
+      <xs:enumeration value="Tlingit-Haida"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
