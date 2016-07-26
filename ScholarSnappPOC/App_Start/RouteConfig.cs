@@ -13,11 +13,18 @@ namespace ScholarSnappPOC
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //Add route for ScholarSnapp linked to controller
+            routes.MapRoute(
+                "ScholarSnapp",
+                "ScholarSnapp",
+                new { controller = "Home", action = "ScholarSnappConnect" }
+            );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
         }
     }
 }

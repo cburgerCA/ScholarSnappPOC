@@ -10,16 +10,21 @@ namespace ScholarSnappPOC.Controllers
     public class HomeController : Controller
     {
 
+        /// <summary>
+        /// Home Page: where user enters in email and extra information to pass back to the redirecturl.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             var SSUrl = ConfigurationManager.AppSettings["SSUrl"].ToString();
             SSUrl += "?response_type=code";
-            SSUrl += "&client_id=" + Server.UrlPathEncode(ConfigurationManager.AppSettings["SSClientId"].ToString());
-            SSUrl += "&redirect_uri=" + Server.UrlPathEncode(ConfigurationManager.AppSettings["SSRedirect_Uri"].ToString());
+            SSUrl += "&client_id=" + Server.UrlEncode(ConfigurationManager.AppSettings["SSClientId"].ToString());
+            SSUrl += "&redirect_uri=" + Server.UrlEncode(ConfigurationManager.AppSettings["SSRedirect_Uri"].ToString());
             ViewBag.SSUrl = SSUrl;
             return View();
         }
 
+        //Not Used - Default page
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -27,6 +32,7 @@ namespace ScholarSnappPOC.Controllers
             return View();
         }
 
+        //Not Used - Default page
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -34,12 +40,23 @@ namespace ScholarSnappPOC.Controllers
             return View();
         }
 
-        public ActionResult ScholarSnappConnect(string error, string code, string state, string extra)
+        /// <summary>
+        /// Redirection landing.
+        /// </summary>
+        /// <param name="error">The error.</param>
+        /// <param name="code">The code.</param>
+        /// <param name="state">The state.</param>
+        /// <returns></returns>
+        public ActionResult ScholarSnappConnect(string error, string code, string state)
         {
             ViewBag.Error = error;
             ViewBag.Code = code;
-            ViewBag.state = state;
-            ViewBag.Extra = extra;
+            List<string> stateItems = state.Split('|').ToList();
+            ViewBag.state = stateItems[0];
+            if (stateItems.Count > 1)
+            {
+                ViewBag.Extra = stateItems[1];
+            }
 
             return View();
         }

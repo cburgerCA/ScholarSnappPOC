@@ -7,10 +7,12 @@ $button.mouseup(function () {
         url += '&email=' + encodeURIComponent($email.val());
     }
     url += '&state=';
-    var state = Sha1.hash(Math.random());
+    //Use state as a unique parameter.
+    var state = Sha1.hash((new Date()).getUTCMilliseconds()).toString();
+    //Add extra items into the state to be loaded by our redirect page
     if ($text.val() != null && $text.val() != '') {
-        state += '&extra=' + encodeURIComponent($text.val());
+        state += '|' + $text.val();
     }
-    url += state;
+    url += encodeURIComponent(state);
     window.location.href = url;
 });
